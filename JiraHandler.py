@@ -6,12 +6,12 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 
 
 class JiraHandler:
-    jira_options = {
+    JIRA_OPTIONS = {
         'server': 'http://localhost:8080',
         'verify': False
     }
 
-    jira_client = None
+    JIRA_CLIENT = None
 
     def __init__(self, **kwargs):
         if len(kwargs) != 2:
@@ -29,7 +29,7 @@ class JiraHandler:
 
             # Creating JIRA client
             try:
-                self.jira_client = JIRA(self.jira_options, basic_auth=(self.username, self.password))
+                self.JIRA_CLIENT = JIRA(self.JIRA_OPTIONS, basic_auth=(self.username, self.password))
             except:
                 raise JiraException("Failed to create JIRA client. Please provide valid User credentials ")
 
@@ -37,7 +37,7 @@ class JiraHandler:
 
     def get_projects(self, raw=False):
         project_list = []
-        for project in self.jira_client.projects():
+        for project in self.JIRA_CLIENT.projects():
             if raw:
                 project_list.append(project)
             else:
@@ -49,7 +49,7 @@ class JiraHandler:
             raise JiraException("Provide details to create new issue")
 
         try:
-            new_issue = self.jira_client.create_issues(project=kwargs['project'], summary=kwargs['summary'],
+            new_issue = self.JIRA_CLIENT.create_issues(project=kwargs['project'], summary=kwargs['summary'],
                                                        description=kwargs['description'],
                                                        components={'id': kwargs['components']},
                                                        assignee={'name': kwargs['assignee']},
@@ -60,11 +60,27 @@ class JiraHandler:
 
 
     def crate_new_issue_2(self, **kwargs):
+        if len(kwargs) != 4:
+            raise JiraException("Provide details to create new issue")
         try:
-            new_issue = self.jira_client(project=kwargs['project'], summary=kwargs['summary'],
-                                         description=kwargs['description'], issuetype={'name': kwargs['Bug']})
+            new_issue = self.JIRA_CLIENT.create_issue(project=kwargs['project'], summary=kwargs['summary'],
+                                                      description=kwargs['description'], issuetype={'name': kwargs['Bug']})
+            print("+ Jira issue created: {}".format(new_issue))
         except:
             raise JiraException("Not enough details was specified to create the issue")
+
+        return new_issue
+
+
+    def crate_new_issue_last(self, fields=None):
+        try:
+            new_issue = self.JIRA_CLIENT.create_issue(fields)
+            print("+ Jira issue created: {}".format(new_issue))
+        except:
+            raise JiraException("Not enough details was specified to create the issue")
+
+        return new_issue
+
         #
         # new_issue = JIRA.create_issues(project='CCI', summary='New issue created through JIRA client',
         #                                description='This is the description for the new JIRA issue',
@@ -81,7 +97,7 @@ class JiraHandler:
     }
 
     def crate_new_issue_3(self, fields=issue_dict):
-        new_issue = self.jira_client(fields)
+        new_issue = self.JIRA_CLIENT(fields)
 
 
 
@@ -98,4 +114,10 @@ class JiraHandler:
 if __name__ == '__main__':
     myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
     print(myJira.get_projects())
-    myJira.crate_new_issue_3()
+    issue_dict = {
+        'project': {'key': "CCI"},
+        'summary': "New issue created through JIRA client",
+        'description': "This is the description for the new JIRA issue",
+        'issuetype': {'name': "Bug"}
+    }
+    myJira.crate_new_issue_last(fields=issue_dict)
