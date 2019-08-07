@@ -35,10 +35,19 @@ class JiraHandler:
 
 
 
+    def get_projects(self, raw = False):
+        project_list = []
+        for project in self.__jiraClient.projects():
+            if raw:
+                project_list.append(project)
+            else:
+                project_list.append({'KEY': project.key, 'NAME': project.name})
+        return project_list
 
 
-if __name__ == '__main__':
-    myJira = JiraHandler(username='rafsan.saadi', password='Goponio!234jira')
+#
+# if __name__ == '__main__':
+#     myJira = JiraHandler(username='rafsan.saadi', password='Goponio!234jira')
 
 
 
