@@ -7,7 +7,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 
 class JiraHandler:
     __jiraOptions = {
-        'server': 'http://localhost:8080/secure/Dashboard.jspa',
+        'server': 'http://localhost:8080',
         'verify': False
     }
 
@@ -38,7 +38,7 @@ class JiraHandler:
 
 
 if __name__ == '__main__':
-    myJira = JiraHandler(username='rafsan.saadi@gmail.com', password='Goponio!234jira')
+    myJira = JiraHandler(username='rafsan.saadi', password='Goponio!234jira')
 
 
 
