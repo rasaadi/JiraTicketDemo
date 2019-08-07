@@ -44,6 +44,13 @@ class JiraHandler:
                 project_list.append({'KEY': project.key, 'NAME': project.name})
         return project_list
 
+    def create_new_issue(self, issue, comment):
+        "https://github.com/r3ap3rpy/python/blob/master/JiraAPIWrapper.py"
+        "https://www.youtube.com/watch?v=Nh01NDSRG1s"
+        "https://jira.readthedocs.io/en/latest/examples.html#quickstart"
+
+
+
 
 #
 # if __name__ == '__main__':
