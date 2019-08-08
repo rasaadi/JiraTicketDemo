@@ -1,3 +1,7 @@
+'''
+Reference URL:https://jira.readthedocs.io/en/latest/index.html
+'''
+
 from jira import JIRA
 import requests
 import JiraException
@@ -88,22 +92,25 @@ class JiraHandler:
         return issue_details
 
     def get_all_issues_for_project(self, projects=None):
-        project_name = 'project={}'.format(projects)
-        issues_in_project = self.JIRA_CLIENT.search_issues(project_name)
+        if projects is not None:
+            project_name = 'project={}'.format(projects)
+
+        try:
+            issues_in_project = self.JIRA_CLIENT.search_issues(project_name)
+        except:
+            raise JiraException("No issue found for the project")
+
         for issue in issues_in_project:
             print('{}: {}'.format(issue.key, issue.fields.summary))
 
     def get_all_issues_assigned_to_current_user(self):
-
-        all_my_issues = self.JIRA_CLIENT.search_issues('assignee != currentUser()')
+        try:
+            all_my_issues = self.JIRA_CLIENT.search_issues(
+                'assignee = currentUser() AND status in (Open, "In Progress")')
+        except:
+            raise JiraException("No issue found for the current user")
         for issue in all_my_issues:
             print('{}: {}'.format(issue.key, issue.fields.summary))
-
-
-
-        "https://github.com/r3ap3rpy/python/blob/master/JiraAPIWrapper.py"
-        "https://www.youtube.com/watch?v=Nh01NDSRG1s"
-        "https://jira.readthedocs.io/en/latest/examples.html#quickstart"
 
 # if __name__ == '__main__':
 #     myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
