@@ -33,8 +33,6 @@ class JiraHandler:
             except:
                 raise JiraException("Failed to create JIRA client. Please provide valid User credentials ")
 
-
-
     def get_projects(self, raw=False):
         project_list = []
         for project in self.JIRA_CLIENT.projects():
@@ -44,67 +42,39 @@ class JiraHandler:
                 project_list.append({'KEY': project.key, 'NAME': project.name, 'ID': project.id})
         return project_list
 
-    def create_new_issue(self, **kwargs):
-        if len(kwargs) != 7:
+    def choose_field_type(self, fields=None, **fieldargs):
+        if fields is not None:
+            return {'fielfs': fields}
+        return {'fields': fieldargs}
+
+    def crate_new_issue(self, fields=None):
+        if fields is not None:
+            try:
+                new_issue = self.JIRA_CLIENT.create_issue(fields)
+                print("Jira issue created: {}".format(new_issue))
+            except:
+                raise JiraException("Not enough details was specified to create the issue")
+            return new_issue
+        else:
+            raise JiraException("Did not specify ISSUE details")
+
+    def create_new_issue(self, **fieldargs):
+        if len(fieldargs) != 4:
             raise JiraException("Provide details to create new issue")
 
         try:
-            new_issue = self.JIRA_CLIENT.create_issues(project=kwargs['project'], summary=kwargs['summary'],
-                                                       description=kwargs['description'],
-                                                       components={'id': kwargs['components']},
-                                                       assignee={'name': kwargs['assignee']},
-                                                       issuetype={'name': kwargs['description']})
+            new_issue = self.JIRA_CLIENT.create_issue(project=fieldargs['project'], summary=fieldargs['summary'],
+                                                      description=fieldargs['description'],
+                                                      issuetype=fieldargs['issuetype'])
+            return new_issue
+            print("Jira issue created: {}".format(new_issue))
         except:
             raise JiraException("Not enough details was specified to create the issue")
 
 
-
-    def crate_new_issue_2(self, **kwargs):
-        if len(kwargs) != 4:
-            raise JiraException("Provide details to create new issue")
-        try:
-            new_issue = self.JIRA_CLIENT.create_issue(project=kwargs['project'], summary=kwargs['summary'],
-                                                      description=kwargs['description'], issuetype={'name': kwargs['Bug']})
-            print("+ Jira issue created: {}".format(new_issue))
-        except:
-            raise JiraException("Not enough details was specified to create the issue")
-
-        return new_issue
-
-
-    def crate_new_issue_last(self, fields=None):
-        try:
-            new_issue = self.JIRA_CLIENT.create_issue(fields)
-            print("+ Jira issue created: {}".format(new_issue))
-        except:
-            raise JiraException("Not enough details was specified to create the issue")
-
-        return new_issue
-
-        #
-        # new_issue = JIRA.create_issues(project='CCI', summary='New issue created through JIRA client',
-        #                                description='This is the description for the new JIRA issue',
-        #                                issuetype={'name': 'Bug'})
-        # new_issue = JIRA.create_issue(project='CCI', summary='New issue from jira-python',
-        #                   description='Look into this one', issuetype={'name': 'Bug'})
-
-
-    issue_dict = {
-        'project': {'id': 10000},
-        'summary': 'New issue from jira-python',
-        'description': 'Look into this one',
-        'issuetype': {'name': 'Bug'},
-    }
-
-    def crate_new_issue_3(self, fields=issue_dict):
-        new_issue = self.JIRA_CLIENT(fields)
-
-
-
-
-    # def get_issue_by_id(self, issueID):
-    #     issue = JIRA.issue(issueID)
-    #     return issue
+        # def get_issue_by_id(self, issueID):
+        #     issue = JIRA.issue(issueID)
+        #     return issue
 
         "https://github.com/r3ap3rpy/python/blob/master/JiraAPIWrapper.py"
         "https://www.youtube.com/watch?v=Nh01NDSRG1s"
@@ -116,8 +86,10 @@ if __name__ == '__main__':
     print(myJira.get_projects())
     issue_dict = {
         'project': {'key': "CCI"},
-        'summary': "New issue created through JIRA client",
+        'summary': "New issue created through JIRA client-5",
         'description': "This is the description for the new JIRA issue",
         'issuetype': {'name': "Bug"}
     }
-    myJira.crate_new_issue_last(fields=issue_dict)
+    myJira.crate_new_issue(fields=issue_dict)
+    myJira.create_new_issue(project={'key': "CCI"}, summary="New issue created through JIRA client-6",
+                            description="This is the description for the new JIRA issue", issuetype={'name': "Bug"})
