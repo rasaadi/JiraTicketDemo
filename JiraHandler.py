@@ -18,6 +18,7 @@ class JiraHandler:
     JIRA_CLIENT = None
 
     def __init__(self, **kwargs):
+        print("[RS] Instantiate JiraHandler Object")
         if len(kwargs) != 2:
             raise JiraException("Must provide Username and password as arguments")
         else:
@@ -71,6 +72,7 @@ class JiraHandler:
         return new_issue
 
     def create_new_issue(self, fields=None, **fieldargs):
+        print("[RS] Creating new JIRA issue")
         if fields is not None and len(fieldargs) == 0:
             self.crate_new_issue_with_fields(fields)
         elif len(fieldargs) == 4 and fields == None:

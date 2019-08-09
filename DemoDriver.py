@@ -13,6 +13,7 @@ class DemoDriver:
     else:
         weather_api_url = myWeather.url_constructor(None, target_city)
 
+    # Enable automated monitoring for temperature and create JIRA ticket as needed
     i = 1
     while(True):
         weather_json = myWeather.make_weather_api_request(weather_api_url)
@@ -34,6 +35,7 @@ class DemoDriver:
             'issuetype': {'name': "Bug"}
         }
 
+        # Monitoring condition to create JIRA ticket automatically
         if current_temp < 65.46 or current_temp > 80:
             myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
             # myJira.create_new_issue(project=project, summary=summary, description=description, issuetype=issuetype)

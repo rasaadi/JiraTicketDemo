@@ -9,11 +9,13 @@ from OpenWeatherException import OpenWeatherException as OWException
 
 class OpenWeather:
     def __init__(self):
+        print("Instantiate OpenWeather Object")
         self.API_KEY = "349573272b4f8cf9a6c3ce64750b5d83"
         self.BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
         self.TEMP_UNIT = 'imperial'
 
     def url_constructor(self, city_name=None, city_zip_code=None):
+        print("[RS] Constructing OpenWeather API URL")
         if city_name is not None and city_zip_code is None:
             complete_url = self.BASE_URL + "q=" + str(
                 city_name) + "&APPID=" + self.API_KEY + "&mode=json&units=" + self.TEMP_UNIT
@@ -25,6 +27,7 @@ class OpenWeather:
         return complete_url
 
     def make_weather_api_request(self, target_url):
+        print("[RS] Making OpenWeather API request")
         if target_url is not None:
             try:
                 response = requests.get(target_url)
@@ -34,6 +37,7 @@ class OpenWeather:
             return json_response
 
     def get_current_temperature(self, json_response):
+        print("[RS] Getting current temperature from the JSON response")
         if json_response is not None and json_response["cod"] != "404":
             # Reading "main" content
             MAIN_CONTENT = json_response["main"]
@@ -43,6 +47,7 @@ class OpenWeather:
         return current_temperature
 
     def get_current_weather_report(self, json_response):
+        print("[RS] Getting weather report from the JSON response")
         if json_response is not None and json_response["cod"] == "200":
             # Reading "main" content
             MAIN_CONTENT = json_response["main"]
