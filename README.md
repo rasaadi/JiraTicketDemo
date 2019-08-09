@@ -65,5 +65,5 @@ Use the free JIRA test instance or local JIRA development.
 ```
 
 ### Sample JIRA ticket:
-![Alt text](JiraTicketDemo/blob/master/misc/SampleJiraTicket.png?raw=true "SampleJiraTicket")
+![Alt text](https://github.com/rasaadi/JiraTicketDemo/blob/master/misc/SampleJiraTicket.png?raw=true "SampleJiraTicket")
 
