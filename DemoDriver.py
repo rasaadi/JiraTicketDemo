@@ -8,7 +8,12 @@ class DemoDriver:
     myWeather = OpenWeather()
     target_city = "Mountain View"
 
-    weather_api_url = myWeather.url_constructor(target_city)
+    if isinstance(target_city, str):
+        weather_api_url = myWeather.url_constructor(target_city, None)
+    else:
+        weather_api_url = myWeather.url_constructor(None, target_city)
+
+    # weather_api_url = myWeather.url_constructor(target_city)
     weather_json = myWeather.make_weather_api_request(weather_api_url)
     current_temp = myWeather.get_current_temperature(weather_json)
     print("{} temperature is {}".format(target_city, current_temp))

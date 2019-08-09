@@ -17,7 +17,7 @@ class OpenWeather:
         if city_name is not None and city_zip_code is None:
             complete_url = self.BASE_URL + "q=" + str(
                 city_name) + "&APPID=" + self.API_KEY + "&mode=json&units=" + self.TEMP_UNIT
-        elif city_name is None and city_zip_code is not None:
+        elif city_name is None and city_zip_code is not None and isinstance(city_zip_code, int):
             complete_url = self.BASE_URL + "zip=" + str(
                 city_zip_code) + "&APPID=" + self.API_KEY + "&units=" + self.TEMP_UNIT
         else:
@@ -67,8 +67,9 @@ class OpenWeather:
 ########################################TEST CODE#############################################################
 # if __name__ == '__main__':
 #     myWeather = OpenWeather()
-#     city = 94040
-#     URL = myWeather.url_constructor(city)
+    # city = 94040
+    # URL = myWeather.url_constructor(None, city)
+    # print(URL)
 #     weatherJson = myWeather.get_weather(URL)
 #     # weatherReport = myWeather.get_weather_report(weatherJson)
 #     temperature = myWeather.get_current_temperature(weatherJson)
