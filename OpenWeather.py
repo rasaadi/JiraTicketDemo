@@ -1,3 +1,7 @@
+'''
+Reference URL: https://openweathermap.org/current
+'''
+
 import requests
 import json
 from OpenWeatherException import OpenWeatherException as OWException
@@ -8,7 +12,6 @@ class OpenWeather:
         self.API_KEY = "349573272b4f8cf9a6c3ce64750b5d83"
         self.BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
         self.TEMP_UNIT = 'imperial'
-
 
     def url_constructor(self, city_name=None, city_zip_code=None):
         if city_name is not None and city_zip_code is None:
@@ -21,7 +24,7 @@ class OpenWeather:
             raise OWException("Missing city information")
         return complete_url
 
-    def get_weather(self, target_url):
+    def make_weather_api_request(self, target_url):
         if target_url is not None:
             try:
                 response = requests.get(target_url)
@@ -39,9 +42,8 @@ class OpenWeather:
             raise OWException("No City/Temperature reading found")
         return current_temperature
 
-
-    def get_weather_report(self, json_response):
-        if json_response is not None and json_response["cod"] != "404":
+    def get_current_weather_report(self, json_response):
+        if json_response is not None and json_response["cod"] == "200":
             # Reading "main" content
             MAIN_CONTENT = json_response["main"]
             current_temperature = MAIN_CONTENT["temp"]
@@ -61,6 +63,8 @@ class OpenWeather:
 
 
 
+
+########################################TEST CODE#############################################################
 # if __name__ == '__main__':
 #     myWeather = OpenWeather()
 #     city = 94040

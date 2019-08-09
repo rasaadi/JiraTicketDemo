@@ -1,5 +1,5 @@
 '''
-Reference URL:https://jira.readthedocs.io/en/latest/index.html
+Reference URL: https://jira.readthedocs.io/en/latest/index.html
 '''
 
 from jira import JIRA
@@ -112,6 +112,7 @@ class JiraHandler:
         for issue in all_my_issues:
             print('{}: {}'.format(issue.key, issue.fields.summary))
 
+
     # def update_issue_details(self, **detailargs):
     #     if len(detailargs) < 3:
     #         raise JiraException("Minimum 2 agruments need to be specified")
@@ -126,6 +127,7 @@ class JiraHandler:
 
 
 
+########################################TEST CODE#############################################################
 # if __name__ == '__main__':
 #     myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
 #     print(myJira.get_projects())

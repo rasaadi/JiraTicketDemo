@@ -1,3 +1,5 @@
+import time
+
 from JiraHandler import JiraHandler
 from OpenWeather import OpenWeather
 
@@ -7,9 +9,9 @@ class DemoDriver:
     target_city = "Mountain View"
 
     weather_api_url = myWeather.url_constructor(target_city)
-    weatherJson = myWeather.get_weather(weather_api_url)
-    current_temp = myWeather.get_current_temperature(weatherJson)
-    print(current_temp)
+    weather_json = myWeather.make_weather_api_request(weather_api_url)
+    current_temp = myWeather.get_current_temperature(weather_json)
+    print("{} temperature is {}".format(target_city, current_temp))
 
     # project = {'key': "CCI"}
     # summary = "ATTENTION: {}'s temperature is changed to {}".format(target_city, current_temp)
@@ -20,9 +22,9 @@ class DemoDriver:
 
     issue_dict = {
         'project': {'key': "CCI"},
-        'summary': "[ATTENTION] {}'s temperature is changed to {}".format(target_city, current_temp),
-        'description': "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city,
-                                                                                                    current_temp),
+        'summary': "[ATTENTION] {} current temperature is changed to {}F".format(target_city, current_temp),
+        'description': "Temperature for {} has changed to {}F. It requires urgent attention.".format(target_city,
+                                                                                                     current_temp),
         'issuetype': {'name': "Bug"}
     }
 
@@ -31,7 +33,11 @@ class DemoDriver:
         # myJira.create_new_issue(project=project, summary=summary, description=description, issuetype=issuetype)
         myJira.create_new_issue(fields=issue_dict)
 
-    ########################################TEST CODE#############################################################
+
+
+
+
+########################################TEST CODE#############################################################
     # myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
     # print(myJira.get_projects())
     #
