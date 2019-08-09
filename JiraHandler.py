@@ -112,6 +112,20 @@ class JiraHandler:
         for issue in all_my_issues:
             print('{}: {}'.format(issue.key, issue.fields.summary))
 
+    # def update_issue_details(self, **detailargs):
+    #     if len(detailargs) < 3:
+    #         raise JiraException("Minimum 2 agruments need to be specified")
+    #
+    #     target_issue = self.JIRA_CLIENT.issue(issueID)
+        # target_issue.update(fields={'summary': 'new summary', 'description': 'A new summary was added'})
+        # target_issue.update(summary=detailargs['summary'], description= detailargs['description'])
+
+        # new_issue = self.JIRA_CLIENT.create_issue(project=fieldargs['project'], summary=fieldargs['summary'],
+        #                                           description=fieldargs['description'],
+        #                                           issuetype=fieldargs['issuetype'])
+
+
+
 # if __name__ == '__main__':
 #     myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
 #     print(myJira.get_projects())

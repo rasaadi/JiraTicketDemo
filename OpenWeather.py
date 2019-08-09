@@ -60,11 +60,11 @@ class OpenWeather:
 
 
 
-if __name__ == '__main__':
-    myWeather = OpenWeather()
-    city = 94040
-    URL = myWeather.url_constructor(city)
-    weatherJson = myWeather.get_weather(URL)
-    # weatherReport = myWeather.get_weather_report(weatherJson)
-    temperature = myWeather.get_current_temperature(weatherJson)
-    print(temperature)
+# if __name__ == '__main__':
+#     myWeather = OpenWeather()
+#     city = 94040
+#     URL = myWeather.url_constructor(city)
+#     weatherJson = myWeather.get_weather(URL)
+#     # weatherReport = myWeather.get_weather_report(weatherJson)
+#     temperature = myWeather.get_current_temperature(weatherJson)
+#     print(temperature)
