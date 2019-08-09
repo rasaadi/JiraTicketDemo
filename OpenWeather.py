@@ -9,8 +9,6 @@ class OpenWeather:
     TEMP_UNIT = 'imperial'
 
     def url_constructor(self, city_name=None, city_zip_code=None):
-        print(city_name)
-        print(city_zip_code)
         # complete_url = None
         if city_name is not None and city_zip_code is None:
             complete_url = self.BASE_URL + "q=" + str(
@@ -30,6 +28,16 @@ class OpenWeather:
             except:
                 raise OWException("Could not make the weather update API request")
             return json_response
+
+    def get_current_temperature(self, json_response):
+        if json_response is not None and json_response["cod"] != "404":
+            # Reading "main" content
+            MAIN_CONTENT = json_response["main"]
+            current_temperature = MAIN_CONTENT["temp"]
+        else:
+            raise OWException("No City/Temperature reading found")
+        return current_temperature
+
 
     def get_weather_report(self, json_response):
         if json_response is not None and json_response["cod"] != "404":
@@ -51,9 +59,12 @@ class OpenWeather:
             raise OWException("No weather report / City found")
 
 
+
 if __name__ == '__main__':
     myWeather = OpenWeather()
     city = 94040
     URL = myWeather.url_constructor(city)
     weatherJson = myWeather.get_weather(URL)
-    weatherReport = myWeather.get_weather_report(weatherJson)
+    # weatherReport = myWeather.get_weather_report(weatherJson)
+    temperature = myWeather.get_current_temperature(weatherJson)
+    print(temperature)
