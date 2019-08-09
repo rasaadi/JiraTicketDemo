@@ -1,21 +1,21 @@
 # JiraTicketDemo
 Jira Ticket Demo for `Senior Software/Security Engineer`
 
-# Problem:
+### Problem:
 Security Vulnerabilities are event driven should be persisted in JIRA. Rest API integration and maintaining data quality 
 and integrity is a key component of the Development Security Platform. 
 
-# Demo requirements:
+### Demo requirements:
 Create `functional` POC/wireframe using AWS Lambda/Python serverless application that can be used to `create JIRAs` once 
 a certain monitored condition is met (e.g. Temperature obtained from weather underground `RestAPI`).
 Suggest/implement additional features that could be considered.
 Present and outline the solution key points, customer benefits, and security considerations.
 
-# Notes: 
+### Notes: 
 Use the free JIRA test instance or local JIRA development.
 
 ========================================================================================================================
-# Sample Open Weather API output:
+### Sample Open Weather API output:
 ```json
 // https://api.openweathermap.org/data/2.5/weather?zip=95051&APPID=349573272b4f8cf9a6c3ce64750b5d83&units=imperial
 
@@ -64,6 +64,6 @@ Use the free JIRA test instance or local JIRA development.
 }
 ```
 
-# Sample JIRA ticket:
+### Sample JIRA ticket:
 ![Alt text](https://github.com/rasaadi/JiraTicketDemo/blob/master/SampleJiraTicket.png?raw=true "SampleJiraTicket")
 
