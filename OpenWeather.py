@@ -4,12 +4,13 @@ from OpenWeatherException import OpenWeatherException as OWException
 
 
 class OpenWeather:
-    API_KEY = "349573272b4f8cf9a6c3ce64750b5d83"
-    BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
-    TEMP_UNIT = 'imperial'
+    def __init__(self):
+        self.API_KEY = "349573272b4f8cf9a6c3ce64750b5d83"
+        self.BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+        self.TEMP_UNIT = 'imperial'
+
 
     def url_constructor(self, city_name=None, city_zip_code=None):
-        # complete_url = None
         if city_name is not None and city_zip_code is None:
             complete_url = self.BASE_URL + "q=" + str(
                 city_name) + "&APPID=" + self.API_KEY + "&mode=json&units=" + self.TEMP_UNIT

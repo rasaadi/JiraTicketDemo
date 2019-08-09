@@ -6,27 +6,27 @@ class DemoDriver:
     myWeather = OpenWeather()
     target_city = "Mountain View"
 
-    URL = myWeather.url_constructor(target_city)
-    weatherJson = myWeather.get_weather(URL)
-    temperature = myWeather.get_current_temperature(weatherJson)
-    print(temperature)
+    weather_api_url = myWeather.url_constructor(target_city)
+    weatherJson = myWeather.get_weather(weather_api_url)
+    current_temp = myWeather.get_current_temperature(weatherJson)
+    print(current_temp)
 
     # project = {'key': "CCI"}
-    # summary = "ATTENTION: {}'s temperature is changed to {}".format(target_city, temperature)
+    # summary = "ATTENTION: {}'s temperature is changed to {}".format(target_city, current_temp)
     # print(summary)
-    # description = "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city, temperature)
+    # description = "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city, current_temp)
     # print(description)
     # issuetype = {'name': "Bug"}
 
     issue_dict = {
         'project': {'key': "CCI"},
-        'summary': "[ATTENTION] {}'s temperature is changed to {}".format(target_city, temperature),
+        'summary': "[ATTENTION] {}'s temperature is changed to {}".format(target_city, current_temp),
         'description': "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city,
-                                                                                                    temperature),
+                                                                                                    current_temp),
         'issuetype': {'name': "Bug"}
     }
 
-    if temperature < 65.46 or temperature > 80:
+    if current_temp < 65.46 or current_temp > 80:
         myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
         # myJira.create_new_issue(project=project, summary=summary, description=description, issuetype=issuetype)
         myJira.create_new_issue(fields=issue_dict)
