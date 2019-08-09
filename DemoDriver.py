@@ -3,6 +3,35 @@ from OpenWeather import OpenWeather
 
 
 class DemoDriver:
+    myWeather = OpenWeather()
+    target_city = "Mountain View"
+
+    URL = myWeather.url_constructor(target_city)
+    weatherJson = myWeather.get_weather(URL)
+    temperature = myWeather.get_current_temperature(weatherJson)
+    print(temperature)
+
+    # project = {'key': "CCI"}
+    # summary = "ATTENTION: {}'s temperature is changed to {}".format(target_city, temperature)
+    # print(summary)
+    # description = "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city, temperature)
+    # print(description)
+    # issuetype = {'name': "Bug"}
+
+    issue_dict = {
+        'project': {'key': "CCI"},
+        'summary': "[ATTENTION] {}'s temperature is changed to {}".format(target_city, temperature),
+        'description': "Temperature for {} has changed to {}. It requires urgent attention.".format(target_city,
+                                                                                                    temperature),
+        'issuetype': {'name': "Bug"}
+    }
+
+    if temperature < 65.46 or temperature > 80:
+        myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
+        # myJira.create_new_issue(project=project, summary=summary, description=description, issuetype=issuetype)
+        myJira.create_new_issue(fields=issue_dict)
+
+    ########################################TEST CODE#############################################################
     # myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
     # print(myJira.get_projects())
     #
@@ -21,26 +50,3 @@ class DemoDriver:
     # myJira.get_all_issues_assigned_to_current_user()
 
     # myJira.update_issue_details('CCI-15', summary='this is the new updated summery for CCI-15')
-
-    myWeather = OpenWeather()
-    city = 94040
-
-    URL = myWeather.url_constructor(city)
-    weatherJson = myWeather.get_weather(URL)
-    temperature = myWeather.get_current_temperature(weatherJson)
-    print(temperature)
-
-    project = {'key': "CCI"}
-    summary = "ATTENTION: {}'s temperature is changed to {}".format(city, temperature)
-    print(summary)
-    description = "Temperature for {} has changed to {}. It requires urgent attention.".format(city, temperature)
-    print(description)
-    issuetype = {'name': "Bug"}
-
-    if temperature < 65.46 or temperature > 80:
-        myJira = JiraHandler(username='rafsan.saadi', password='Pass!23')
-        myJira.create_new_issue(project=project, summary=summary, description=description, issuetype=issuetype)
-
-
-
-
