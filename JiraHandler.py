@@ -6,8 +6,6 @@ from jira import JIRA
 import requests
 import JiraException
 
-requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
 
 class JiraHandler:
     JIRA_OPTIONS = {
